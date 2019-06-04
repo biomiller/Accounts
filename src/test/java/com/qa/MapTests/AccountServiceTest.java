@@ -8,22 +8,48 @@ import org.junit.Test;
 
 import com.qa.persistence.domain.Account;
 import com.qa.persistence.repository.AccountMapRepository;
+import com.qa.util.JSONUtil;
 
 public class AccountServiceTest {
+	
+	JSONUtil jsonutil;
 
 	@Before
-	public void setup() {
-	
+	public void setup() {	
+		
+		jsonutil = new JSONUtil();
 	}
+	
 	
 	@Test
 	public void addAccountTest() {
-		fail("TODO");	
+		
+		AccountMapRepository testAMP = new AccountMapRepository();
+		
+		String testJSON = "{\"id\":4,\"accountNumber\":10,\"firstName\":\"Owen\",\"lastName\":\"Miller\"}";
+		
+		testAMP.createAccount(testJSON);
+		
+		assertTrue(1 == testAMP.getAccountMap().size());
+		
 	}
 	
 	@Test
 	public void add2AccountsTest() {
-		fail("TODO");	
+		
+		AccountMapRepository testAMP = new AccountMapRepository();
+		
+		String testJSON1 = "{\"id\":1,\"accountNumber\":10,\"firstName\":\"Owen\",\"lastName\":\"Miller\"}";
+		
+		String testJSON2 = "{\"id\":2,\"accountNumber\":11,\"firstName\":\"John\",\"lastName\":\"Smith\"}";
+		
+		testAMP.createAccount(testJSON1);
+		testAMP.createAccount(testJSON2);
+		
+		System.out.println(testAMP.getAccountMap().get(11).getId());
+
+		
+		assertTrue(2 == testAMP.getAccountMap().size());
 	}
 
 	@Test
@@ -43,15 +69,27 @@ public class AccountServiceTest {
 	
 	@Test
 	public void jsonStringToAccountConversionTest() {
-		// testing JSONUtil
-		fail("TODO");	
+		
+		String testJSON = "{\"id\":4,\"accountNumber\":10,\"firstName\":\"Owen\",\"lastName\":\"Miller\"}";
+		
+		Account testJSONtoAccount = jsonutil.getObjectForJSON(testJSON, Account.class);
+		
+		assertEquals("Account", testJSONtoAccount.getClass().getSimpleName());
+				
 	}
 
 
 	@Test
 	public void accountConversionToJSONTest() {
-		//testing JSONUtil
-		fail("TODO");	
+		
+		AccountMapRepository testAMP = new AccountMapRepository();
+		
+		Account testAccount = new Account(1,10, "Owen", "Miller");
+		
+		String testAccountJSON = jsonutil.getJSONForObject(testAccount);
+		
+		assertEquals("{\"id\":1,\"accountNumber\":10,\"firstName\":\"Owen\",\"lastName\":\"Miller\"}", testAccountJSON);
+				
 	}
 
 	@Test
