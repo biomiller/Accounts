@@ -13,22 +13,23 @@ import com.qa.util.JSONUtil;
 public class AccountServiceTest {
 	
 	JSONUtil jsonutil;
+	AccountMapRepository testAMP;
+	String testJSON1 = "{\"id\":1,\"accountNumber\":10,\"firstName\":\"Owen\",\"lastName\":\"Miller\"}";
+	String testJSON2 = "{\"id\":2,\"accountNumber\":11,\"firstName\":\"John\",\"lastName\":\"Smith\"}";
+	Account testAccount = new Account(1,10, "Owen", "Miller");
 
 	@Before
 	public void setup() {	
 		
 		jsonutil = new JSONUtil();
+		testAMP = new AccountMapRepository();
 	}
 	
 	
 	@Test
 	public void addAccountTest() {
-		
-		AccountMapRepository testAMP = new AccountMapRepository();
-		
-		String testJSON = "{\"id\":4,\"accountNumber\":10,\"firstName\":\"Owen\",\"lastName\":\"Miller\"}";
-		
-		testAMP.createAccount(testJSON);
+			
+		testAMP.createAccount(testJSON1);
 		
 		assertTrue(1 == testAMP.getAccountMap().size());
 		
@@ -36,43 +37,58 @@ public class AccountServiceTest {
 	
 	@Test
 	public void add2AccountsTest() {
-		
-		AccountMapRepository testAMP = new AccountMapRepository();
-		
-		String testJSON1 = "{\"id\":1,\"accountNumber\":10,\"firstName\":\"Owen\",\"lastName\":\"Miller\"}";
-		
-		String testJSON2 = "{\"id\":2,\"accountNumber\":11,\"firstName\":\"John\",\"lastName\":\"Smith\"}";
-		
+				
 		testAMP.createAccount(testJSON1);
 		testAMP.createAccount(testJSON2);
-		
-		System.out.println(testAMP.getAccountMap().get(11).getId());
-
 		
 		assertTrue(2 == testAMP.getAccountMap().size());
 	}
 
 	@Test
 	public void removeAccountTest() {
-		fail("TODO");	
+			
+		testAMP.createAccount(testJSON1);
+		
+		assertTrue(1 == testAMP.getAccountMap().size());
+		
+		testAMP.deleteAccount(10);
+		
+		assertTrue(0 == testAMP.getAccountMap().size());
+
 	}
 	
 	@Test
 	public void remove2AccountsTest() {
-		fail("TODO");	
+		
+		testAMP.createAccount(testJSON1);
+		testAMP.createAccount(testJSON2);
+		
+		assertTrue(2 == testAMP.getAccountMap().size());
+		
+		testAMP.deleteAccount(10);
+		testAMP.deleteAccount(11);
+		
+		assertTrue(0 == testAMP.getAccountMap().size()); 
 	}
 	
 	@Test
 	public void remove2AccountTestAnd1ThatDoesntExist() {
-		fail("TODO");	
+		
+		testAMP.createAccount(testJSON1);
+		testAMP.createAccount(testJSON2);
+		
+		assertTrue(2 == testAMP.getAccountMap().size());
+		
+		testAMP.deleteAccount(10);
+		testAMP.deleteAccount(12);
+		
+		assertTrue(1 == testAMP.getAccountMap().size());
 	}
 	
 	@Test
 	public void jsonStringToAccountConversionTest() {
-		
-		String testJSON = "{\"id\":4,\"accountNumber\":10,\"firstName\":\"Owen\",\"lastName\":\"Miller\"}";
-		
-		Account testJSONtoAccount = jsonutil.getObjectForJSON(testJSON, Account.class);
+			
+		Account testJSONtoAccount = jsonutil.getObjectForJSON(testJSON1, Account.class);
 		
 		assertEquals("Account", testJSONtoAccount.getClass().getSimpleName());
 				
@@ -82,9 +98,6 @@ public class AccountServiceTest {
 	@Test
 	public void accountConversionToJSONTest() {
 		
-		AccountMapRepository testAMP = new AccountMapRepository();
-		
-		Account testAccount = new Account(1,10, "Owen", "Miller");
 		
 		String testAccountJSON = jsonutil.getJSONForObject(testAccount);
 		
@@ -94,8 +107,9 @@ public class AccountServiceTest {
 
 	@Test
 	public void getCountForFirstNamesInAccountWhenZeroOccurances() {
-		//For a later piece of functionality
-		fail("TODO");	
+		
+		assertEquals("{}", testAMP.getAllAccounts());
+	
 	}
 	
 	@Test
