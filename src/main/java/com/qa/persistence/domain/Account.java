@@ -1,26 +1,23 @@
 package com.qa.persistence.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Account {
 	
-	//This class needs to have:
-	//An id
-	//An Account Number
-	//A First Name
-	//A last Name
-	
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;	
+	@Column(length = 100)
 	private int accountNumber;
+	@Column(length = 50)
 	private String firstName;
+	@Column(length = 50)
 	private String lastName;
-    //private static int idCounter = 1; 
 
-	
-/*	public Account(int accountNumber, String firstName, String lastName) {
-		this.id = idCounter++;
-		this.accountNumber = accountNumber;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}*/
 	
 	
 	// Jacksoon needs a default constructor!
