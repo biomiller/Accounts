@@ -4,10 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.qa.persistence.domain.Account;
+import com.qa.util.JSONUtil;
 
 public class AccountMapRepository implements AccountRepository{
 	
-	Map<Integer, Account> accountMap = new HashMap<Integer, Account>();
+	private Map<Integer, Account> accountMap = new HashMap<Integer, Account>();
+		
+
+
+	JSONUtil jsonutil = new JSONUtil();
 	
 	//You must provide concrete implementation for each of these methods
 	//do not change the method signature
@@ -19,23 +24,58 @@ public class AccountMapRepository implements AccountRepository{
 	//You can use the suggested tests or build your own.
 
 	public String getAllAccounts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		
+		
+		String allAccounts = jsonutil.getJSONForObject(this.getAccountMap());
+		
+		return allAccounts;
 
+	}
+	
+	
 	public String createAccount(String account) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Account newAccount = jsonutil.getObjectForJSON(account, Account.class);
+		
+		this.getAccountMap().put(newAccount.getAccountNumber(), newAccount);
+		
+		return "Added new account with id " + newAccount.getId() + " and name " + newAccount.getFirstName() + " " + newAccount.getLastName();
 	}
 
 	public String deleteAccount(int accountNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if(this.getAccountMap().containsKey(accountNumber)) {
+			this.getAccountMap().remove(accountNumber);
+			return "Account with account number " + accountNumber + " removed.";
+		}
+		
+		else {
+			return "Account does not exist";
+		}
+		
+		
 	}
 
 	public String updateAccount(int accountNumber, String account) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+		Account newAccount = jsonutil.getObjectForJSON(account, Account.class);
+		
+		this.getAccountMap().put(accountNumber, newAccount);
+		
+		return "Account updated";
+	}
+	
+	
+	
+	
+	
+	public Map<Integer, Account> getAccountMap() {
+		return accountMap;
+	}
+
+	public void setAccountMap(Map<Integer, Account> accountMap) {
+		this.accountMap = accountMap;
 	}
 
 }
