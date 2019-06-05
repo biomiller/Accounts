@@ -157,5 +157,15 @@ public class AccountServiceTest {
 		assertEquals(1, testAMR.findByName("Owen"));
 		
 	}
+	
+	@Test
+	public void nameFinderTwoAccountsOneMatch() {
+		
+		testAMR.createAccount(testJSON1);
+		testAMR.createAccount(testJSON1);
+		
+		assertEquals(1, testAMR.findByName("Owen"));
+		
+	}
 
 }
