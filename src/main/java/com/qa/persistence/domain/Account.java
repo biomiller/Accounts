@@ -8,9 +8,10 @@ import javax.persistence.Id;
 
 @Entity
 public class Account {
-	
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	@Column(length = 100)
 	private int accountNumber;
 	@Column(length = 50)
@@ -18,11 +19,11 @@ public class Account {
 	@Column(length = 50)
 	private String lastName;
 
-	
-	
-	// Jacksoon needs a default constructor!
-	public Account() {}
-	
+	// default constructor
+	public Account() {
+		super();
+	}
+
 	public Account(int id, int accountNumber, String firstName, String lastName) {
 		this.id = id;
 		this.accountNumber = accountNumber;
@@ -61,10 +62,5 @@ public class Account {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	
-	
-	
-	
 
 }
