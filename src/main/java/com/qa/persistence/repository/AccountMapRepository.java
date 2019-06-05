@@ -1,10 +1,15 @@
 package com.qa.persistence.repository;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.qa.persistence.domain.Account;
 import com.qa.util.JSONUtil;
+import com.qa.util.JacksonJSONUtil;
 
 public class AccountMapRepository implements AccountRepository{
 	
@@ -13,6 +18,8 @@ public class AccountMapRepository implements AccountRepository{
 
 
 	JSONUtil jsonutil = new JSONUtil();
+	
+	JacksonJSONUtil jacksonjsonutil = new JacksonJSONUtil();
 	
 	//You must provide concrete implementation for each of these methods
 	//do not change the method signature
@@ -41,6 +48,7 @@ public class AccountMapRepository implements AccountRepository{
 		
 		return "Added new account with id " + newAccount.getId() + " and name " + newAccount.getFirstName() + " " + newAccount.getLastName();
 	}
+	
 
 	public String deleteAccount(int accountNumber) {
 		
@@ -65,6 +73,32 @@ public class AccountMapRepository implements AccountRepository{
 		
 		return "Account updated";
 	}
+	
+	// Using Jackson
+	
+	public String getAllAccountsJackson() throws JsonProcessingException {
+		
+		
+		String allAccounts = jacksonjsonutil.jacksonGetJSONForObject(this.getAccountMap());
+		
+		System.out.println("Got all account using Jackson");
+		
+		return allAccounts;
+
+	}
+	
+	
+	public String createAccountJackson(String account) throws JsonParseException, JsonMappingException, IOException {
+		
+		Account newAccount = jacksonjsonutil.jacksonGetObjectForJSON(account, Account.class);
+		
+		System.out.println("Creating new account from JSON string using Jackson");
+		
+		this.getAccountMap().put(newAccount.getAccountNumber(), newAccount);
+		
+		return "Added new account with id " + newAccount.getId() + " and name " + newAccount.getFirstName() + " " + newAccount.getLastName();
+	}
+
 	
 	
 	

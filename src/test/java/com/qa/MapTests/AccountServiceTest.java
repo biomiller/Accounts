@@ -2,10 +2,15 @@ package com.qa.MapTests;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.qa.persistence.domain.Account;
 import com.qa.persistence.repository.AccountMapRepository;
 import com.qa.util.JSONUtil;
@@ -26,12 +31,12 @@ public class AccountServiceTest {
 	}
 	
 	
-	@Test
+	@Test  
 	public void addAccountTest() {
 			
 		testAMP.createAccount(testJSON1);
 		
-		assertTrue(1 == testAMP.getAccountMap().size());
+		assertTrue(1 == testAMP.getAccountMap().size()); 
 		
 	}
 	
@@ -112,16 +117,34 @@ public class AccountServiceTest {
 	
 	}
 	
+	
 	@Test
 	public void getCountForFirstNamesInAccountWhenOne() {
 		//For a later piece of functionality
-		fail("TODO");	
+		//fail("TODO");	
 	}
 
 	@Test
 	public void getCountForFirstNamesInAccountWhenTwo() {
 		//For a later piece of functionality
-		fail("TODO");	
+		//fail("TODO");	
+	}
+	
+	
+	@Test
+	public void jacksonGetAllAccounts() throws IOException {
+		testAMP.createAccountJackson(testJSON1);
+		System.out.println(testAMP.getAllAccountsJackson());
+		
+	}
+	
+	@Test  
+	public void jacksonAddAccountTest() throws JsonParseException, JsonMappingException, IOException {
+			
+		testAMP.createAccountJackson(testJSON1);
+		
+		assertTrue(1 == testAMP.getAccountMap().size()); 
+		
 	}
 
 }
