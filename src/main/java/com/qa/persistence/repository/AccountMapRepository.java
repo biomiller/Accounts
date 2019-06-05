@@ -113,13 +113,14 @@ public class AccountMapRepository implements AccountRepository{
 	}
 
 
-	public int findByName(String string) {
+	public int findByName(String name) {
 		int counter = 0;
 		for (Account acc : this.getAccountMap().values()) {
-			if(acc.getFirstName().equals(string)) {
+			if(acc.getFirstName().equals(name)) {
 				counter++;
 			}
 		}
+		System.out.println("First Name " + name + " found " + counter + " time(s)");
 		return counter;
 	}
 
