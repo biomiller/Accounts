@@ -112,4 +112,16 @@ public class AccountMapRepository implements AccountRepository{
 		this.accountMap = accountMap;
 	}
 
+
+	public int findByName(String string) {
+		int counter = 0;
+		for (int key : accountMap.keySet()) {
+			String name = accountMap.get(key).getFirstName();
+			if(name == string) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
 }

@@ -18,7 +18,7 @@ import com.qa.util.JSONUtil;
 public class AccountServiceTest {
 	
 	JSONUtil jsonutil;
-	AccountMapRepository testAMP;
+	AccountMapRepository testAMR;
 	String testJSON1 = "{\"id\":1,\"accountNumber\":10,\"firstName\":\"Owen\",\"lastName\":\"Miller\"}";
 	String testJSON2 = "{\"id\":2,\"accountNumber\":11,\"firstName\":\"John\",\"lastName\":\"Smith\"}";
 	Account testAccount = new Account(1,10, "Owen", "Miller");
@@ -27,67 +27,67 @@ public class AccountServiceTest {
 	public void setup() {	
 		
 		jsonutil = new JSONUtil();
-		testAMP = new AccountMapRepository();
+		testAMR = new AccountMapRepository();
 	}
 	
 	
 	@Test  
 	public void addAccountTest() {
 			
-		testAMP.createAccount(testJSON1);
+		testAMR.createAccount(testJSON1);
 		
-		assertTrue(1 == testAMP.getAccountMap().size()); 
+		assertTrue(1 == testAMR.getAccountMap().size()); 
 		
 	}
 	
 	@Test
 	public void add2AccountsTest() {
 				
-		testAMP.createAccount(testJSON1);
-		testAMP.createAccount(testJSON2);
+		testAMR.createAccount(testJSON1);
+		testAMR.createAccount(testJSON2);
 		
-		assertTrue(2 == testAMP.getAccountMap().size());
+		assertTrue(2 == testAMR.getAccountMap().size());
 	}
 
 	@Test
 	public void removeAccountTest() {
 			
-		testAMP.createAccount(testJSON1);
+		testAMR.createAccount(testJSON1);
 		
-		assertTrue(1 == testAMP.getAccountMap().size());
+		assertTrue(1 == testAMR.getAccountMap().size());
 		
-		testAMP.deleteAccount(10);
+		testAMR.deleteAccount(10);
 		
-		assertTrue(0 == testAMP.getAccountMap().size());
+		assertTrue(0 == testAMR.getAccountMap().size());
 
 	}
 	
 	@Test
 	public void remove2AccountsTest() {
 		
-		testAMP.createAccount(testJSON1);
-		testAMP.createAccount(testJSON2);
+		testAMR.createAccount(testJSON1);
+		testAMR.createAccount(testJSON2);
 		
-		assertTrue(2 == testAMP.getAccountMap().size());
+		assertTrue(2 == testAMR.getAccountMap().size());
 		
-		testAMP.deleteAccount(10);
-		testAMP.deleteAccount(11);
+		testAMR.deleteAccount(10);
+		testAMR.deleteAccount(11);
 		
-		assertTrue(0 == testAMP.getAccountMap().size()); 
+		assertTrue(0 == testAMR.getAccountMap().size()); 
 	}
 	
 	@Test
 	public void remove2AccountTestAnd1ThatDoesntExist() {
 		
-		testAMP.createAccount(testJSON1);
-		testAMP.createAccount(testJSON2);
+		testAMR.createAccount(testJSON1);
+		testAMR.createAccount(testJSON2);
 		
-		assertTrue(2 == testAMP.getAccountMap().size());
+		assertTrue(2 == testAMR.getAccountMap().size());
 		
-		testAMP.deleteAccount(10);
-		testAMP.deleteAccount(12);
+		testAMR.deleteAccount(10);
+		testAMR.deleteAccount(12);
 		
-		assertTrue(1 == testAMP.getAccountMap().size());
+		assertTrue(1 == testAMR.getAccountMap().size());
 	}
 	
 	@Test
@@ -113,7 +113,7 @@ public class AccountServiceTest {
 	@Test
 	public void getCountForFirstNamesInAccountWhenZeroOccurances() {
 		
-		assertEquals("{}", testAMP.getAllAccounts());
+		assertEquals("{}", testAMR.getAllAccounts());
 	
 	}
 	
@@ -133,17 +133,17 @@ public class AccountServiceTest {
 	
 	@Test
 	public void jacksonGetAllAccounts() throws IOException {
-		testAMP.createAccountJackson(testJSON1);
-		System.out.println(testAMP.getAllAccountsJackson());
+		testAMR.createAccountJackson(testJSON1);
+		System.out.println(testAMR.getAllAccountsJackson());
 		
 	}
 	
 	@Test  
 	public void jacksonAddAccountTest() throws JsonParseException, JsonMappingException, IOException {
 			
-		testAMP.createAccountJackson(testJSON1);
+		testAMR.createAccountJackson(testJSON1);
 		
-		assertTrue(1 == testAMP.getAccountMap().size()); 
+		assertTrue(1 == testAMR.getAccountMap().size()); 
 		
 	}
 	
@@ -152,9 +152,9 @@ public class AccountServiceTest {
 	@Test
 	public void nameFinderTest() {
 		
-		testAMP.createAccount(testJSON1);
+		testAMR.createAccount(testJSON1);
 		
-		assertEquals(1, testAMP.findByName("Owen"));
+		assertEquals(1, testAMR.findByName("Owen"));
 		
 	}
 
