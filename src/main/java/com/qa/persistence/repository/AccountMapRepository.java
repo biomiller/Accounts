@@ -81,18 +81,18 @@ public class AccountMapRepository implements AccountRepository{
 		
 		String allAccounts = jacksonjsonutil.jacksonGetJSONForObject(this.getAccountMap());
 		
-		System.out.println("Got all account using Jackson");
+		//System.out.println("Got all account using Jackson");
 		
 		return allAccounts;
 
 	}
 	
 	
-	public String createAccountJackson(String account) throws JsonParseException, JsonMappingException, IOException {
+	public String createAccountJackson(String account) throws IOException {
 		
 		Account newAccount = jacksonjsonutil.jacksonGetObjectForJSON(account, Account.class);
 		
-		System.out.println("Creating new account from JSON string using Jackson");
+		//System.out.println("Creating new account from JSON string using Jackson");
 		
 		this.getAccountMap().put(newAccount.getAccountNumber(), newAccount);
 		
@@ -110,6 +110,18 @@ public class AccountMapRepository implements AccountRepository{
 
 	public void setAccountMap(Map<Integer, Account> accountMap) {
 		this.accountMap = accountMap;
+	}
+
+
+	public int findByName(String name) {
+		int counter = 0;
+		for (Account acc : this.getAccountMap().values()) {
+			if(acc.getFirstName().equals(name)) {
+				counter++;
+			}
+		}
+		System.out.println("First Name " + name + " found " + counter + " time(s)");
+		return counter;
 	}
 
 }
