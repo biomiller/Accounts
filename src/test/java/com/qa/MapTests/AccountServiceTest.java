@@ -134,7 +134,7 @@ public class AccountServiceTest {
 	@Test
 	public void jacksonGetAllAccounts() throws IOException {
 		testAMR.createAccountJackson(testJSON1);
-		System.out.println(testAMR.getAllAccountsJackson());
+		//System.out.println(testAMR.getAllAccountsJackson());
 		
 	}
 	
