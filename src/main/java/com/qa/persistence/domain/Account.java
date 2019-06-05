@@ -8,12 +8,12 @@ public class Account {
 	//A First Name
 	//A last Name
 	
-    private int id;
-    //private static int idCounter = 1; 
-	
+    private int id;	
 	private int accountNumber;
 	private String firstName;
 	private String lastName;
+    //private static int idCounter = 1; 
+
 	
 /*	public Account(int accountNumber, String firstName, String lastName) {
 		this.id = idCounter++;
@@ -21,6 +21,10 @@ public class Account {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}*/
+	
+	
+	// Jacksoon needs a default constructor!
+	public Account() {}
 	
 	public Account(int id, int accountNumber, String firstName, String lastName) {
 		this.id = id;
