@@ -146,5 +146,16 @@ public class AccountServiceTest {
 		assertTrue(1 == testAMP.getAccountMap().size()); 
 		
 	}
+	
+	
+	
+	@Test
+	public void nameFinderTest() {
+		
+		testAMP.createAccount(testJSON1);
+		
+		assertEquals(1, testAMP.findByName("Owen"));
+		
+	}
 
 }
