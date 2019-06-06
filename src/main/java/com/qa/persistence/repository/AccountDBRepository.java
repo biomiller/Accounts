@@ -11,8 +11,6 @@ import com.qa.util.JSONUtil;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-import java.util.Collection;
-
 import javax.inject.Inject;
 
 @Transactional(SUPPORTS)
@@ -23,11 +21,17 @@ public class AccountDBRepository implements AccountRepository {
 
 	@Inject
 	private JSONUtil jsonutil;
+	
+	@Transactional(SUPPORTS)
+    public String findAccount(int ID) {
+    return jsonutil.getJSONForObject(manager.find(Account.class, ID));
+    
+    }
 
 	@Override
 	public String getAllAccounts() {
 		Query query = manager.createQuery("SELECT a FROM Account a", Account.class);
-		return util.getJSONForObject(query);
+		return jsonutil.getJSONForObject(query);
 	}
 
 	@Override
@@ -39,27 +43,37 @@ public class AccountDBRepository implements AccountRepository {
 	}
 
 	@Override
-	public String deleteAccount(int accountNumber) {
-		// TODO Auto-generated method stub
-		return null;
+	public String deleteAccount(int id) {
+		Account account = manager.find(Account.class, id);
+
+        if (manager.contains(account)) {
+        	manager.getTransaction().begin();
+        	manager.remove(account);
+        	manager.getTransaction().commit();
+            return "{\"message\": \"Account sucessfully deleted " + id + " \"}";
+        }
+
+        return "{\"message\": \"No account found with this id.\"}";
 	}
 
 	@Override
 	@Transactional(REQUIRED)
 	public String updateAccount(int accountNumber, String account) {
 
-		Query query = manager.createQuery("Select a FROM Movie a WHERE a.accountNumber = :accountNumber");
+		Query query = manager.createQuery("Select a FROM Account a WHERE a.accountNumber = :accountNumber");
 		query.setParameter("accountNumber", accountNumber);
 
 		Account oldAcc = (Account) query.getSingleResult();
 
 		Account newAcc = jsonutil.getObjectForJSON(account, Account.class);
 
+		manager.getTransaction().begin();
 		manager.remove(oldAcc);
 		manager.persist(newAcc);
+		manager.getTransaction().commit();
 
 
-		return account;
+		return "{\"message\": \"account has been successfully updated\"}";
 	}
 
 }
