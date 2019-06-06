@@ -13,7 +13,7 @@ public class AccountServiceImpl implements AccountService {
 	public String getAllAccounts() {
 		return repo.getAllAccounts();
 	}
-	
+
 	@Override
 	public String getAnAccount(int id) {
 		return repo.getAnAccount(id);
@@ -46,7 +46,5 @@ public class AccountServiceImpl implements AccountService {
 	public AccountRepository getRepo() {
 		return repo;
 	}
-
-
 
 }
