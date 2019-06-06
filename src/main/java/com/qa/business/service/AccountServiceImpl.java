@@ -15,8 +15,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public String getAnAccount(int id) {
-		return repo.getAnAccount(id);
+	public String getAnAccount(int accountNumber) {
+		return repo.getAnAccount(accountNumber);
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public String deleteAccount(int id) {
-		return repo.deleteAccount(id);
+	public String deleteAccount(int accountNumber) {
+		return repo.deleteAccount(accountNumber);
 	}
 
 	@Override
