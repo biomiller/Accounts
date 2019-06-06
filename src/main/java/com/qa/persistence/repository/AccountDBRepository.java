@@ -32,7 +32,7 @@ public class AccountDBRepository implements AccountRepository {
 	@Override
 	public String getAllAccounts() {
 		Query query = manager.createQuery("SELECT a FROM Account a", Account.class);
-		return jsonutil.getJSONForObject(query);
+		return jsonutil.getJSONForObject(query.getResultList());
 	}
 
 	@Override

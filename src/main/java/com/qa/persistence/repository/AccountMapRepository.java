@@ -10,10 +10,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qa.persistence.domain.Account;
 import com.qa.util.JSONUtil;
 import com.qa.util.JacksonJSONUtil;
+@Alternative
 
 public class AccountMapRepository implements AccountRepository{
 	
-	@Alternative
 	
 	private Map<Integer, Account> accountMap = new HashMap<Integer, Account>();
 		
