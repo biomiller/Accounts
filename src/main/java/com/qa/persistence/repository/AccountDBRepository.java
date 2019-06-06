@@ -1,6 +1,7 @@
 package com.qa.persistence.repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
@@ -23,11 +24,10 @@ public class AccountDBRepository implements AccountRepository {
 
 	@Inject
 	private JSONUtil jsonutil;
-	
-	
-    public String getAnAccount(int id) {
-    return jsonutil.getJSONForObject(manager.find(Account.class, id));
-    }
+
+	public String getAnAccount(int id) {
+		return jsonutil.getJSONForObject(manager.find(Account.class, id));
+	}
 
 	@Override
 	public String getAllAccounts() {
@@ -48,34 +48,36 @@ public class AccountDBRepository implements AccountRepository {
 	public String deleteAccount(int id) {
 		Account account = manager.find(Account.class, id);
 
-        if (manager.contains(account)) {
-        	manager.getTransaction().begin();
-        	manager.remove(account);
-        	manager.getTransaction().commit();
-            return "{\"message\": \"Account sucessfully deleted " + id + " \"}";
-        }
+		if (manager.contains(account)) {
+			manager.remove(account);
 
-        return "{\"message\": \"No account found with this id.\"}";
+			return "{\"message\": \"Account sucessfully deleted " + id + " \"}";
+		}
+
+		return "{\"message\": \"No account found with this id.\"}";
 	}
 
 	@Override
 	@Transactional(REQUIRED)
-	public String updateAccount(int accountNumber, String account) {
+	public String updateAccount(int accountNum, String account) {
 
-		Query query = manager.createQuery("Select a FROM Account a WHERE a.accountNumber = :accountNumber");
-		query.setParameter("accountNumber", accountNumber);
+		Query query = manager.createQuery("Select a FROM Account a WHERE a.accountNumber = :accountNum");
+		query.setParameter("accountNum", accountNum);
 
-		Account oldAcc = (Account) query.getSingleResult();
+		try {
+			Account oldAcc = (Account) query.getSingleResult();
 
-		Account newAcc = jsonutil.getObjectForJSON(account, Account.class);
+			Account newAcc = jsonutil.getObjectForJSON(account, Account.class);
 
-		manager.getTransaction().begin();
-		manager.remove(oldAcc);
-		manager.persist(newAcc);
-		manager.getTransaction().commit();
-		
+			manager.remove(oldAcc);
+			manager.persist(newAcc);
 
-		return "{\"message\": \"account has been successfully updated\"}";
+			return "{\"message\": \"account has been successfully updated\"}";
+		} catch (NoResultException e) {
+			return "{\"message\": \"account does not exist\"}";
+
+		}
+
 	}
 
 }
