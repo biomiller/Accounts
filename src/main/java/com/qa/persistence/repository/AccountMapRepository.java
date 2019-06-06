@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.enterprise.inject.Alternative;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qa.persistence.domain.Account;
 import com.qa.util.JSONUtil;
 import com.qa.util.JacksonJSONUtil;
 
 public class AccountMapRepository implements AccountRepository{
+	
+	@Alternative
 	
 	private Map<Integer, Account> accountMap = new HashMap<Integer, Account>();
 		
