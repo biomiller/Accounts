@@ -119,4 +119,11 @@ public class AccountMapRepository implements AccountRepository{
 		return counter;
 	}
 
+
+	@Override
+	public String getAnAccount(int accountNumber) {
+		return null;
+
+	}
+
 }

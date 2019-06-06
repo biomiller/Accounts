@@ -25,8 +25,8 @@ public class AccountDBRepository implements AccountRepository {
 	private JSONUtil jsonutil;
 	
 	
-    public String findAccount(int ID) {
-    return jsonutil.getJSONForObject(manager.find(Account.class, ID));
+    public String getAnAccount(int id) {
+    return jsonutil.getJSONForObject(manager.find(Account.class, id));
     }
 
 	@Override
