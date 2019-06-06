@@ -42,8 +42,8 @@ public class AccountMapRepository implements AccountRepository{
 	}
 	
 	@Override
-	public String getAnAccount(int id) {
-		return jsonutil.getJSONForObject(this.getAccountMap().get(id));
+	public String getAnAccount(int accountNumber) {
+		return jsonutil.getJSONForObject(this.getAccountMap().get(accountNumber));
 
 	}
 	

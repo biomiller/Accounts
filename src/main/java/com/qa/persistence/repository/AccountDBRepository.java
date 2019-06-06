@@ -25,8 +25,18 @@ public class AccountDBRepository implements AccountRepository {
 	@Inject
 	private JSONUtil jsonutil;
 
-	public String getAnAccount(int id) {
-		return jsonutil.getJSONForObject(manager.find(Account.class, id));
+	public String getAnAccount(int accountNum) {
+
+		Query query = manager.createQuery("Select a FROM Account a WHERE a.accountNumber = :accountNum");
+		query.setParameter("accountNum", accountNum);
+
+		try {
+			Account acc = (Account) query.getSingleResult();
+			return jsonutil.getJSONForObject(acc);
+		} catch (NoResultException e) {
+			return "{\"message\": \"No account found with this id.\"}";
+		}
+
 	}
 
 	@Override
@@ -45,16 +55,28 @@ public class AccountDBRepository implements AccountRepository {
 
 	@Override
 	@Transactional(REQUIRED)
-	public String deleteAccount(int id) {
-		Account account = manager.find(Account.class, id);
+	public String deleteAccount(int accountNum) {
 
-		if (manager.contains(account)) {
-			manager.remove(account);
+		Query query = manager.createQuery("Select a FROM Account a WHERE a.accountNumber = :accountNum");
+		query.setParameter("accountNum", accountNum);
 
-			return "{\"message\": \"Account sucessfully deleted " + id + " \"}";
+		try {
+			Account acc = (Account) query.getSingleResult();
+			manager.remove(acc);
+
+			return "{\"message\": \"Account has been successfully updated\"}";
+		} catch (NoResultException e) {
+			return "{\"message\": \"No account found with this id.\"}";
 		}
-
-		return "{\"message\": \"No account found with this id.\"}";
+		/*
+		 * Account account = manager.find(Account.class, id);
+		 * 
+		 * if (manager.contains(account)) { manager.remove(account);
+		 * 
+		 * return "{\"message\": \"Account sucessfully deleted " + id + " \"}"; }
+		 * 
+		 * return "{\"message\": \"No account found with this id.\"}";
+		 */
 	}
 
 	@Override
