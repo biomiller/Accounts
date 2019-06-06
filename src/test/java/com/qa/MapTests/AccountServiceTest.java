@@ -117,20 +117,18 @@ public class AccountServiceTest {
 
 	@Test
 	public void getCountForFirstNamesInAccountWhenOne() {
-		// For a later piece of functionality
-		// fail("TODO");
+
 	}
 
 	@Test
 	public void getCountForFirstNamesInAccountWhenTwo() {
-		// For a later piece of functionality
-		// fail("TODO");
+
 	}
 
 	@Test
 	public void jacksonGetAllAccounts() throws IOException {
 		testAMR.createAccountJackson(testJSON1);
-		// System.out.println(testAMR.getAllAccountsJackson());
+		System.out.println(testAMR.getAllAccountsJackson());
 
 	}
 
