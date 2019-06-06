@@ -72,9 +72,9 @@ public class AccountDBRepository implements AccountRepository {
 			manager.remove(oldAcc);
 			manager.persist(newAcc);
 
-			return "{\"message\": \"account has been successfully updated\"}";
+			return "{\"message\": \"Account has been successfully updated\"}";
 		} catch (NoResultException e) {
-			return "{\"message\": \"account does not exist\"}";
+			return "{\"message\": \"No account found with this id.\"}";
 
 		}
 
