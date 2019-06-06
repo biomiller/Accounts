@@ -22,10 +22,9 @@ public class AccountDBRepository implements AccountRepository {
 	@Inject
 	private JSONUtil jsonutil;
 	
-	@Transactional(SUPPORTS)
+	
     public String findAccount(int ID) {
     return jsonutil.getJSONForObject(manager.find(Account.class, ID));
-    
     }
 
 	@Override
@@ -43,6 +42,7 @@ public class AccountDBRepository implements AccountRepository {
 	}
 
 	@Override
+	@Transactional(REQUIRED)
 	public String deleteAccount(int id) {
 		Account account = manager.find(Account.class, id);
 
@@ -71,7 +71,7 @@ public class AccountDBRepository implements AccountRepository {
 		manager.remove(oldAcc);
 		manager.persist(newAcc);
 		manager.getTransaction().commit();
-
+		
 
 		return "{\"message\": \"account has been successfully updated\"}";
 	}
