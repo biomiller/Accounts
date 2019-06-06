@@ -25,18 +25,14 @@ public class AccountDBServiceTest {
 	}
 	
 	
-	@Test
+/*	@Test
 	public void updateAnAccountTest() {
 		
 		testADBR.createAccount(testJSON1);
 		
 		testADBR.updateAccount(10, testJSON2);
+
 		
-		
-		
-		
-		
-		
-	}
+	}*/
 
 }
