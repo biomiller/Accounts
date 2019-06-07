@@ -91,8 +91,11 @@ public class AccountDBRepository implements AccountRepository {
 
 			Account newAcc = jsonutil.getObjectForJSON(account, Account.class);
 
-			manager.remove(oldAcc);
-			manager.persist(newAcc);
+			oldAcc.setAccountNumber(newAcc.getAccountNumber());
+			oldAcc.setFirstName(newAcc.getFirstName());
+			oldAcc.setAccountNumber(newAcc.getAccountNumber());
+			
+			manager.persist(oldAcc);
 
 			return "{\"message\": \"Account has been successfully updated\"}";
 		} catch (NoResultException e) {
